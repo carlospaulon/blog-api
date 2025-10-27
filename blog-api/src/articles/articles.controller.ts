@@ -15,7 +15,7 @@ import { CreateArticleDto } from './dto/create-article.dto';
 import { Article } from './entities/article.entity';
 import { UpdateArticleDto } from './dto/update-article.dto';
 
-@Controller('articles')
+@Controller('api/v1/articles')
 export class ArticlesController {
   constructor(private readonly articlesService: ArticlesService) {}
 
@@ -30,12 +30,12 @@ export class ArticlesController {
     return this.articlesService.findAll();
   }
 
-  @Get()
+  @Get(':id')
   async findOne(@Param('id') id: string) {
     return this.articlesService.findOne(id);
   }
 
-  @Put()
+  @Put(':id')
   async update(@Param('id') id: string, @Body() updateArticleDto: UpdateArticleDto) {
     return this.articlesService.update(id, updateArticleDto);
   }
