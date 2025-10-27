@@ -3,6 +3,7 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Article } from './articles/entities/article.entity';
+import { ArticlesModule } from './articles/articles.module';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { Article } from './articles/entities/article.entity';
       synchronize: false, //deixar como false dps
       migrationsRun: true, //criar migration
     }),
-    TypeOrmModule.forFeature([]), //dps colocar o article module embaixo
+    TypeOrmModule.forFeature([]),
+    ArticlesModule, //dps colocar o article module embaixo
   ],
   controllers: [],
   providers: [AppService],
