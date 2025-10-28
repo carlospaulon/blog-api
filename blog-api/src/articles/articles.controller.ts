@@ -7,13 +7,15 @@ import {
   Param,
   Put,
   Patch,
-  Delete
+  Delete,
+  Query
 } from '@nestjs/common';
 import { Controller } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { Article } from './entities/article.entity';
 import { UpdateArticleDto } from './dto/update-article.dto';
+import { FilterArticleDto } from './dto/filter-article.dto';
 
 @Controller('api/v1/articles')
 export class ArticlesController {
@@ -26,8 +28,13 @@ export class ArticlesController {
   }
 
   @Get()
-  async findAll() {
-    return this.articlesService.findAll();
+  async findAll(@Query() filterDto: FilterArticleDto) {
+    return this.articlesService.findAll(filterDto);
+  }
+
+  @Get('slug/:slug')
+  async findBySlug(@Param('slug') slug: string) {    
+    return this.articlesService.findBySlug(slug);
   }
 
   @Get(':id')
