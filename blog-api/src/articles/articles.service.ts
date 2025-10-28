@@ -5,7 +5,6 @@ import { Repository } from 'typeorm';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { FilterArticleDto } from './dto/filter-article.dto';
-import { QueryBuilder } from 'typeorm/browser';
 
 @Injectable()
 export class ArticlesService {
@@ -34,8 +33,8 @@ export class ArticlesService {
       author,
       tag,
       search,
-      sortBy,
-      order,
+      sortBy = 'createdAt',
+      order = 'DESC',
     } = filterDto;
 
     const skip = (page - 1) * limit;
@@ -48,7 +47,7 @@ export class ArticlesService {
 
     if (author) {
       queryBuilder.andWhere('article.author ILIKE :author', {
-        author: `%author%`,
+        author: `%${author}%`,
       });
     }
 
@@ -58,8 +57,8 @@ export class ArticlesService {
 
     if (search) {
       queryBuilder.andWhere(
-        'article.title ILIKE :search OR article.content ILIKE :search',
-        { search: `%search%` },
+        '(article.title ILIKE :search OR article.content ILIKE :search)',
+        { search: `%${search}%` },
       );
     }
 

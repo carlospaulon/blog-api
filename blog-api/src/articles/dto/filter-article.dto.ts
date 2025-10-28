@@ -15,14 +15,14 @@ export class FilterArticleDto {
   @Type(() => Number)
   @IsInt()
   @Min(1)
-  page?: number = 1;
+  page?: number;
 
   @IsOptional()
   @Type(() => Number)
   @IsInt()
   @Min(1)
   @Max(100)
-  limit?: number = 10;
+  limit?: number;
 
   @IsOptional()
   @Type(() => Boolean)
@@ -44,10 +44,10 @@ export class FilterArticleDto {
   @IsOptional()
   @IsString()
   @IsIn(['createdAt', 'updatedAt', 'title', 'publishedAt', 'viewCount'])
-  sortBy?: string = 'createdAt';
+  sortBy?: string;
 
   @IsOptional()
   @IsString()
   @IsIn(['DESC', 'ASC'])
-  order?: 'DESC' | 'ASC' = 'DESC';
+  order?: 'DESC' | 'ASC';
 }
