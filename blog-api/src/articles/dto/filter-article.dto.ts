@@ -9,7 +9,8 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
-export class FilterClassDto {
+//Checar valores padrões do DTO, pois acusam como undefined no service
+export class FilterArticleDto {
   @IsOptional()
   @Type(() => Number)
   @IsInt()
@@ -48,5 +49,5 @@ export class FilterClassDto {
   @IsOptional()
   @IsString()
   @IsIn(['DESC', 'ASC'])
-  order?: string = 'DESC';
+  order?: 'DESC' | 'ASC' = 'DESC';
 }
