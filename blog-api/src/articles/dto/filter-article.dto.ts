@@ -7,9 +7,8 @@ import {
   IsString,
   IsIn,
 } from 'class-validator';
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 
-//Checar valores padrões do DTO, pois acusam como undefined no service
 export class FilterArticleDto {
   @IsOptional()
   @Type(() => Number)
@@ -25,7 +24,11 @@ export class FilterArticleDto {
   limit?: number;
 
   @IsOptional()
-  @Type(() => Boolean)
+  @Transform(({ value }) => {
+    if (value === 'true') return true;
+    if (value === 'false') return false;
+    return value;
+  })
   @IsBoolean()
   published?: boolean;
 
