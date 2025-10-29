@@ -41,7 +41,7 @@ export class ArticlesService {
 
     const queryBuilder = this.articleRepository.createQueryBuilder('article');
 
-    if (published != undefined) {
+    if (published !== undefined) {
       queryBuilder.andWhere('article.published = :published', { published });
     }
 
@@ -52,7 +52,7 @@ export class ArticlesService {
     }
 
     if (tag) {
-      queryBuilder.andWhere(':tag = ANY(article.tags)', { tag });
+      queryBuilder.andWhere('article.tags @> ARRAY[:tag]', { tag });
     }
 
     if (search) {
