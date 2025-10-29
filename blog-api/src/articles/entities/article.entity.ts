@@ -33,7 +33,7 @@ export class Article {
   @Column({type: 'timestamp', nullable: true})
   publishedAt: Date;
 
-  @Column({type: 'simple-array', nullable: true})
+  @Column({type: 'text', array: true ,nullable: true, default: []})
   tags: string[];
 
   @Column({type: 'int', default: 0})
