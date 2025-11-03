@@ -3,18 +3,25 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import helmet from 'helmet';
+import { AllExceptionsFilter } from './common/filters/http-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  //helmet
   app.use(helmet());
 
+  //CORS
   app.enableCors({
     origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     credentials: true,
   });
 
+  //Global exception filter
+  app.useGlobalFilters(new AllExceptionsFilter());
+
+  //Global Pipes - validation
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -23,6 +30,7 @@ async function bootstrap() {
     }),
   );
 
+  //Swagger
   const config = new DocumentBuilder()
     .setTitle('Blog API')
     .setDescription('Personal Blog Platform REST API')
